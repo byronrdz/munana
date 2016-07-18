@@ -42,8 +42,10 @@
 
 <label for "input_eprice">Estimated price:</label>
 <input name="f_eprice" type="numeric" id="input_eprice" data-toggle="tooltip" title="We can use this value in searching for your product. It is a reference price."></input>
+<input type="radio" name="tipo_precio" value="precioxstem"> Price per Stem<br>
+<input type="radio" name="tipo_precio" value="precioxbunch"> Price per Bunch<br>
 
-
+<input type="text" name="f_fecha" id="input_fecha"></input>
 
 
 </div>
@@ -51,7 +53,10 @@
 <script type="text/javascript">
 $( document ).ready(function() {
 
-//	$('[data-toggle="tooltip"]').tooltip();
+
+
+	$("#input_fecha").datepicker( {dateFormat: "yy-mm-dd" });
+	
 	$(".select_longitud").show();		
 	$(".select_peso").hide();		
 	$("#select_producto").change(function() {
