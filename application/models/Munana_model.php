@@ -9,7 +9,9 @@ class Munana_model extends CI_Model {
 
 	public function get_nombres_productos()
 	{
-       		$query = $this->db->get('v_producto');
+       		$query = $this->db->from('v_producto');
+		$this->db->order_by('producto','asc');
+		$query = $this->db->get();
         	return $query->result_array();
 	}
 

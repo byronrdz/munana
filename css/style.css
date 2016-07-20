@@ -39,10 +39,9 @@ button, input, select, textarea {
 	color: #686868;
 	display: block;
 	text-align:center;
-
-
 }
 
+select.producto{text-align:left;}
 
 
 option{background-color:#f4e8ea;}

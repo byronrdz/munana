@@ -8,7 +8,7 @@
 
 <tr><td colspan=2>
 <label for "select_producto">Product:</label>
-<select name="f_producto" id="select_producto">
+<select name="f_producto" id="select_producto" class="producto">
 	<option value="" selected></option> 
 	<?php foreach ($productos as $prod_item)
      		echo '<option value="'.$prod_item['producto'].'+'.$prod_item['dimension'].'">'.$prod_item['producto'].'</option>';?>

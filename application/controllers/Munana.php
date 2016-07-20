@@ -3,10 +3,17 @@ class Munana extends CI_Controller {
 
         public function __construct()
         {
-               parent::__construct();
-               $this->load->model('munana_model');
-               $this->load->helper('url');
+		parent::__construct();
+		$this->load->model('munana_model');
+		$this->load->helper('url');
+		$this->inicia_sesion("Byron Rodriguez",'byronrdz@gmail.com');
         }
+
+	public function inicia_sesion($nombre,$email)
+	{
+		$this->load->library('session');
+		$this->session->set_userdata(array("name"=>$nombre,"email"=>$email,"fecha"=>date("Y-m-d H:i:s")));
+	}
 
  
        public function view_form($page = 'f_pedido')
