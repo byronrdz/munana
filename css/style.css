@@ -54,3 +54,21 @@ option{background-color:#f4e8ea;}
 
 .noblock{display:inline;}
 
+div#seccionformulario{
+	position:absolute;
+	width:280px;
+	height:750px;
+	left:5px;
+	top:5px;
+	border: 1px solid black;
+}
+
+div#seccionpedido{
+	position:absolute;
+	width:900px;
+	height:750px;
+	left:320px;
+	top:5px;
+	border: 1px solid black;
+}
+
