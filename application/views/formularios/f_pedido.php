@@ -79,7 +79,7 @@
 </tr>
 
 <td>
-<tr><td colspan=2> <button id = "_i_addproduct" onclick="add_product()">Add Product</button> </td></tr>
+<tr><td colspan=2> <button id = "_i_addproduct" >Add Product</button> </td></tr>
 
 
 
@@ -102,7 +102,7 @@
 <div id="seccionpedido">
 <table id="tablapedido" border=1>
 <tr id="f0">
-<td width="25">#</td><td width="280">Product</td><td>long/wgt</td><td>Cut Stage</td><td>Bunches</td><td>QxBunch</td><td>E.Price</td><td>B/S</td>
+<td>Caja</td><td width="25">#</td><td width="280">Product</td><td>long/wgt</td><td>Cut Stage</td><td>Bunches</td><td>QxBunch</td><td>E.Price</td><td>B/S</td>
 </tr>
 </table>
 
@@ -117,9 +117,6 @@ $( document ).ready(function() {
 	$(".select_longitud").show();		
 	$(".select_peso").hide();
 
-	var d;
-	var b = -1;
-	var n = -1;
 	var mprods = new Array();
 	$("#_s_producto").change(function() {
  		d = $("#_s_producto").val();
@@ -136,39 +133,53 @@ $( document ).ready(function() {
 
 	$("button#_i_addbox").click(
 	function add_box(event){
-
 		event.preventDefault();
-		b++;
-
 	});
 
+	var Registro = function(prod,longitud,peso,corte,bunches,qxbunch,precio,tipo_precio){
+		Registro.fila ++;
+		this.prod = prod;
+		this.longitud = longitud;
+		this.peso = peso;
+		this.corte = corte;
+		this.bunches = bunches;
+		this.qxbunch = qxbunch;
+		this.precio = precio;
+		this.tipo_precio = tipo_precio;
+	}
+	
+	Registro.fila = 0;
+	Registro.caja = 1;
+
+	Registro.prototype.get_producto = function(){
+		var fin = this.prod.length - 2;
+		var producto = this.prod.substring(0,fin);
+		return producto;
+	}
+
+	Registro.prototype.get_dim = function(){
+		var pos = this.prod.length;
+		var dim = this.prod.substring(pos-1,pos);
+		return dim;
+	}
+
+	Registro.prototype.listar = function(){
+		$("<tr id= f"+(Registro.fila).toString() +"><td>"+Registro.caja.toString()+"</td><td>"+ Registro.fila +"</td><td>"+this.get_producto()+"</td><td>"+(this.get_dim() == 'w' ? this.peso : this.longitud).toString()+"</td><td>"+this.corte.toString()+"</td><td>"+this.bunches.toString()+"</td><td>"+this.qxbunch.toString()+"</td><td>"+this.precio.toString()+"</td><td>"+this.tipo_precio.toString()+"</td>  </tr>").insertAfter("#f"+(Registro.fila-1).toString());	
+	}
+
+	Registro.prototype.set_caja = function(){
+		Registro.caja ++;
+	}
 
 	$("button#_i_addproduct").click(
 	function add_product(event){
-
 		event.preventDefault();
-		n++;
-		mprods[n] = new Array();
-		mprods[n][0] = $("#_s_producto").val();
-		mprods[n][2] = $("#_s_corte").val();
-		mprods[n][3] = $("#_i_bunches").val();
-		mprods[n][4] = $("#_i_qxbunch").val();
-		mprods[n][5] = $("#_i_eprecio").val();
-		mprods[n][6] = $('input[name=tipo_precio]:checked').val();
-
-		if(d =='l'){mprods[n][1] = $("#_s_longitud").val();}
-		if(d =='w'){mprods[n][1] = $("#_s_peso").val();}
+		var registro = new Registro($("#_s_producto").val(),$("#_s_longitud").val(),$("#_s_peso").val(),$("#_s_corte").val(),$("#_i_bunches").val(),$("#_i_qxbunch").val(),$("#_i_eprecio").val(),$('input[name=tipo_precio]:checked').val());
 		
-		m = JSON.stringify(mprods);
-		var fecha = new Date();
-		fecha.setTime(fecha.getTime() + (7*24*60*60*1000));
-		var expires = "expires="+ fecha.toUTCString();
-		document.cookie = "data=" + m + ";"+ expires  +"; path=/";
-
-		$("<tr id= f"+(n+1) +"><td>"+ (n+1) +"</td><td>"+mprods[n][0]+"</td><td>"+mprods[n][1]+"</td><td>"+mprods[n][2]+
-		"</td><td>"+mprods[n][3]+"</td><td>"+mprods[n][4]+"</td><td>"+mprods[n][5]+"</td><td>"+mprods[n][6]+"</td>  </tr>").insertAfter("#f"+n);
-
+		registro.listar();	
 	});
+
+
 
 });
 	
