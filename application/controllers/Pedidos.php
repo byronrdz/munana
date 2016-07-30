@@ -18,8 +18,7 @@ class Pedidos extends CI_Controller {
  
        public function view_form($page = 'f_pedido')
         {
-
-        	if ( ! file_exists(APPPATH.'views/formularios/'.$page.'.php'))
+	       	if ( ! file_exists(APPPATH.'views/formularios/'.$page.'.php'))
         	{
         	        // Whoops, we don't have a page for that!
                 	show_404();
@@ -31,7 +30,7 @@ class Pedidos extends CI_Controller {
 			$data['longitudes'] = $this->munana_model->get_longitudes();
 			$data['pesos'] = $this->munana_model->get_pesos();
 		}
-
+		
         	$this->load->view('templates/header', $data);
 	        $this->load->view('formularios/'.$page, $data);
 	        $this->load->view('templates/footer', $data);
