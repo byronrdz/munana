@@ -18,7 +18,7 @@
 <input name="f_piezas" type="numeric" id="_i_piezas" data-toggle="tooltip" title="Number of boxes" size=4 value=5></input>
 </td>
 </tr>
-<tr><td colspan=2> <button id= "_i_addbox" onclick="add_box()">Add Box</button> </td></tr>
+<tr><td colspan=2> <button id= "_i_addbox">Add Box</button></td></tr>
 <tr><td colspan=2><hr></td></tr>
 <tr><th colspan=2>Product information</th></tr>
 <form id="form_cliente">
@@ -100,9 +100,9 @@
 </div>
 
 <div id="seccionpedido">
-<table id="tablapedido" border=1>
+<table id="tablapedido" border=0>
 <tr id="f0">
-<td>Caja</td><td width="25">#</td><td width="280">Product</td><td>long/wgt</td><td>Cut Stage</td><td>Bunches</td><td>QxBunch</td><td>E.Price</td><td>B/S</td>
+<th class= "ttp" width="25">Item</th><th class="ttp">Boxes</th><th class="ttp">Package</th><th class="ttp">Pieces</th><th class="ttp" width="280">Product</th><th class="ttp">long/wgt</th><th class="ttp">Cut Stage</th><th class="ttp">Bunches</th><th class="ttp">QxBunch</th><th class="ttp">E.Price</th><th class="ttp">B/S</th>
 </tr>
 </table>
 
@@ -112,12 +112,13 @@
 <script type="text/javascript">
 $( document ).ready(function() {
 
+	var items = new Array();	
+
 	$("#_i_fecha").datepicker( {dateFormat: "dd-mm-yy" });
 	
 	$(".select_longitud").show();		
 	$(".select_peso").hide();
 
-	var mprods = new Array();
 	$("#_s_producto").change(function() {
  		d = $("#_s_producto").val();
 		d = d.substr(d.length-1,d.length-1);
@@ -131,10 +132,33 @@ $( document ).ready(function() {
 		}
 	});
 
+
+	$("button#_i_addproduct").click(
+	function add_product(event){
+		event.preventDefault();
+
+		var registro = new Registro($("#_s_producto").val(),$("#_s_longitud").val(),$("#_s_peso").val(),$("#_s_corte").val(),$("#_i_bunches").val(),$("#_i_qxbunch").val(),$("#_i_eprecio").val(),$('input[name=tipo_precio]:checked').val());
+		registro.paquete = Registro.paquete;
+		registro.tipo_caja = Registro.tipo_caja
+		registro.piezas = Registro.piezas;
+		registro.listar();
+		items.push(registro);
+
+		console.log(JSON.stringify(items));
+		
+	});
+
+
 	$("button#_i_addbox").click(
 	function add_box(event){
 		event.preventDefault();
+		Registro.prototype.set_caja();			
 	});
+
+
+
+
+//---------------DEFINICION CLASE REGISTRO---------------------------------------------------------------------------------------
 
 	var Registro = function(prod,longitud,peso,corte,bunches,qxbunch,precio,tipo_precio){
 		Registro.fila ++;
@@ -146,10 +170,17 @@ $( document ).ready(function() {
 		this.qxbunch = qxbunch;
 		this.precio = precio;
 		this.tipo_precio = tipo_precio;
+		this.paquete = 0;
+		this.tipo_caja = "";
+		this.piezas = 0;
 	}
 	
 	Registro.fila = 0;
-	Registro.caja = 1;
+	Registro.paquete = 0;
+	Registro.tipo_caja = "Half";
+	Registro.piezas = 0;
+	Registro.box_marker = 1;
+	Registro.lock_set_caja = 0;
 
 	Registro.prototype.get_producto = function(){
 		var fin = this.prod.length - 2;
@@ -164,21 +195,25 @@ $( document ).ready(function() {
 	}
 
 	Registro.prototype.listar = function(){
-		$("<tr id= f"+(Registro.fila).toString() +"><td>"+Registro.caja.toString()+"</td><td>"+ Registro.fila +"</td><td>"+this.get_producto()+"</td><td>"+(this.get_dim() == 'w' ? this.peso : this.longitud).toString()+"</td><td>"+this.corte.toString()+"</td><td>"+this.bunches.toString()+"</td><td>"+this.qxbunch.toString()+"</td><td>"+this.precio.toString()+"</td><td>"+this.tipo_precio.toString()+"</td>  </tr>").insertAfter("#f"+(Registro.fila-1).toString());	
+		var k = Registro.fila % 2;
+		$("<tr class=" + (k == 1 ? 'fila_par' : 'fila_impar').toString() + " id= f"+(Registro.fila).toString() +"><td>"+ Registro.fila +"</td><td>"+ (Registro.box_marker == 1 ? this.paquete : ' ').toString() +"</td><td>"+(Registro.box_marker == 1 ? this.tipo_caja : ' ').toString()+"</td><td>"+(Registro.box_marker == 1 ? this.piezas : ' ').toString()+"</td><td>"+this.get_producto()+"</td><td>"+(this.get_dim() == 'w' ? this.peso : this.longitud).toString()+"</td><td>"+this.corte.toString()+"</td><td>"+this.bunches.toString()+"</td><td>"+this.qxbunch.toString()+"</td><td>"+this.precio.toString()+"</td><td>"+this.tipo_precio.toString()+"</td>  </tr>").insertAfter("#f"+(Registro.fila-1).toString());
+		Registro.box_marker = 0;
+		Registro.lock_set_caja = 0;	
 	}
 
 	Registro.prototype.set_caja = function(){
-		Registro.caja ++;
+		if (Registro.lock_set_caja == 0)
+		{
+			Registro.paquete ++;
+			Registro.tipo_caja = $("#_s_empaque").val();
+			Registro.piezas = $("#_i_piezas").val();
+			Registro.box_marker = 1;
+			Registro.lock_set_caja = 1;
+		}		
 	}
 
-	$("button#_i_addproduct").click(
-	function add_product(event){
-		event.preventDefault();
-		var registro = new Registro($("#_s_producto").val(),$("#_s_longitud").val(),$("#_s_peso").val(),$("#_s_corte").val(),$("#_i_bunches").val(),$("#_i_qxbunch").val(),$("#_i_eprecio").val(),$('input[name=tipo_precio]:checked').val());
-		
-		registro.listar();	
-	});
 
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 });

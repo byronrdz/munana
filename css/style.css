@@ -72,3 +72,27 @@ div#seccionpedido{
 	border: 1px solid black;
 }
 
+.fila_par{
+	background-color: #e0f0e8;
+}
+
+.fila_impar{
+	background-color: #faf8f8;
+}
+
+td{
+	padding:5px;
+}
+
+table{
+	border-collapse:collapse;
+}
+
+.ttp{
+	border:1px solid green;
+	padding : 5px;
+	height: 40px;
+	background-color: #408050;
+	color: #ffffff;
+	
+}
