@@ -68,8 +68,8 @@
 <label for "input_eprice">Estimated price:</label>
 <input name="f_eprecio" type="numeric" id="_i_eprecio" data-toggle="tooltip" title="We can use this value in searching for your product. It is a reference price." size=6 ></input>
 
-<input type="radio" name="tipo_precio" value="perStem" class="noblock" id=_r_tprecio1 checked>per Stem</input>
-<input type="radio" name="tipo_precio" value="perBunch" class="noblock" id= _r_tprecio2>per Bunch</input>
+<input type="radio" name="tipo_precio" value="perStem" class="noblock" id=_r_tprecio1 checked>Stem</input>
+<input type="radio" name="tipo_precio" value="perBunch" class="noblock" id= _r_tprecio2>Bunch</input>
 </td>
 <td>
 <label for "input_uxcaja">Qty x Box:</label>
@@ -100,7 +100,7 @@
 </div>
 
 <div id="seccionpedido">
-<table id="tablapedido" border=0>
+<table id="tablapedido" border=0 width=100%>
 <tr id="f0">
 <th class= "ttp" width="25">Item</th><th class="ttp">Boxes</th><th class="ttp">Package</th><th class="ttp">Pieces</th><th class="ttp" width="280">Product</th><th class="ttp">long/wgt</th><th class="ttp">Cut Stage</th><th class="ttp">Bunches</th><th class="ttp">QxBunch</th><th class="ttp">E.Price</th><th class="ttp">B/S</th>
 </tr>
@@ -111,8 +111,6 @@
 
 <script type="text/javascript">
 $( document ).ready(function() {
-
-	var items = new Array();	
 
 	$("#_i_fecha").datepicker( {dateFormat: "dd-mm-yy" });
 	
@@ -142,10 +140,7 @@ $( document ).ready(function() {
 		registro.tipo_caja = Registro.tipo_caja
 		registro.piezas = Registro.piezas;
 		registro.listar();
-		items.push(registro);
 
-		console.log(JSON.stringify(items));
-		
 	});
 
 
@@ -162,6 +157,7 @@ $( document ).ready(function() {
 
 	var Registro = function(prod,longitud,peso,corte,bunches,qxbunch,precio,tipo_precio){
 		Registro.fila ++;
+
 		this.prod = prod;
 		this.longitud = longitud;
 		this.peso = peso;
@@ -170,11 +166,15 @@ $( document ).ready(function() {
 		this.qxbunch = qxbunch;
 		this.precio = precio;
 		this.tipo_precio = tipo_precio;
-		this.paquete = 0;
-		this.tipo_caja = "";
-		this.piezas = 0;
+		this.paquete = Registro.paquete;
+		this.tipo_caja = Registro.tipo_caja;
+		this.piezas = Registro.piezas;
+
+		Registro.items.push(this);
+		console.log(JSON.stringify(Registro.items));
 	}
-	
+
+	Registro.items = new Array();
 	Registro.fila = 0;
 	Registro.paquete = 0;
 	Registro.tipo_caja = "Half";
@@ -197,8 +197,10 @@ $( document ).ready(function() {
 	Registro.prototype.listar = function(){
 		var k = Registro.fila % 2;
 		$("<tr class=" + (k == 1 ? 'fila_par' : 'fila_impar').toString() + " id= f"+(Registro.fila).toString() +"><td>"+ Registro.fila +"</td><td>"+ (Registro.box_marker == 1 ? this.paquete : ' ').toString() +"</td><td>"+(Registro.box_marker == 1 ? this.tipo_caja : ' ').toString()+"</td><td>"+(Registro.box_marker == 1 ? this.piezas : ' ').toString()+"</td><td>"+this.get_producto()+"</td><td>"+(this.get_dim() == 'w' ? this.peso : this.longitud).toString()+"</td><td>"+this.corte.toString()+"</td><td>"+this.bunches.toString()+"</td><td>"+this.qxbunch.toString()+"</td><td>"+this.precio.toString()+"</td><td>"+this.tipo_precio.toString()+"</td>  </tr>").insertAfter("#f"+(Registro.fila-1).toString());
+
 		Registro.box_marker = 0;
-		Registro.lock_set_caja = 0;	
+		Registro.lock_set_caja = 0;
+	
 	}
 
 	Registro.prototype.set_caja = function(){
