@@ -96,3 +96,31 @@ table{
 	color: #ffffff;
 	
 }
+
+#campo_editable{
+	border: 1px solid white;
+	position:absolute;	
+	width: 120px;
+	height:50px;
+	background-color: #ffe0a0;
+	z-index:1;
+	text-align:center;
+	padding:4px;
+}
+
+#txt_editable{
+	z-index:1;
+	border: 1px solid black;
+	font-size:14px;
+	width:120px;
+	text-align:center;
+}
+
+.button_tooltip{
+	display:inline;
+	width:50px;
+}
+
+
+
+

@@ -104,10 +104,16 @@
 <div id="seccionpedido">
 <table id="tablapedido" border=0 width=100%>
 <tr id="f0">
-<th class= "ttp" width="25">Item</th><th class="ttp">Boxes</th><th class="ttp">Package</th><th class="ttp">Pieces</th><th class="ttp" width="280">Product</th><th class="ttp">long/wgt</th><th class="ttp">Cut Stage</th><th class="ttp">Bunches</th><th class="ttp">QxBunch</th><th class="ttp">E.Price</th><th class="ttp">B/S</th>
+<th class= "ttp" width="25">Item</th><th class="ttp">Boxes</th><th class="ttp">Package</th><th class="ttp">Pieces</th><th class="ttp" width="280">Product</th><th class="ttp">long/wgt</th><th class="ttp">Cut Stage</th><th class="ttp">Bunches</th><th class="ttp">QxBunch</th><th class="ttp">E.Price</th><th class="ttp">B/S</th><th class="ttp"></th>
 </tr>
 </table>
 
 </div>
+
+<div id="campo_editable"><form>
+<input name="f_uxcaja" type="numeric" id="txt_editable"  size=6 value=0></input>
+<button class="button_tooltip" id="bt_ok" size=6>OK</button>
+<button class="button_tooltip" id="bt_cancel" size=6>X</button>
+</form></div>
 
 
