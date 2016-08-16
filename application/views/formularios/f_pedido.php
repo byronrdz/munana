@@ -110,7 +110,7 @@
 
 </div>
 
-<div id="campo_editable"><form>
+<div id="campo_editable"><form autocomplete=off>
 <input name="f_uxcaja" type="numeric" id="txt_editable"  size=6 value=0></input>
 <button class="button_tooltip" id="bt_ok" size=6>OK</button>
 <button class="button_tooltip" id="bt_cancel" size=6>X</button>
