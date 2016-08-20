@@ -1,20 +1,16 @@
 $( document ).ready(function() {
 
 	$("#_i_fecha").datepicker( {dateFormat: "dd-mm-yy" });
-
 	$(".seccion_prods").hide();	
 	$(".select_longitud").show();		
 	$(".select_peso").hide();
 	$("#campo_editable").hide();
-
-
 	datos =JSON.parse(localStorage.getItem("datos"));
-	if(datos.length > 0)
+	if(datos)
 	{
 		$(".seccion_prods").show();	
 		setTimeout(function(){
 			for(var n = 0 ; n<datos.length ; n++){
-
 				registro = new Registro(datos[n].prod,
 						datos[n].longitud,
 						datos[n].peso,
@@ -27,8 +23,10 @@ $( document ).ready(function() {
 				registro.tipo_caja = datos[n].tipo_caja;
 				registro.piezas = datos[n].piezas;
 			}
+ 			Registro.paquete = datos[n-1].paquete;
+			Registro.tipo_caja = datos[n-1].tipo_caja;
+			Registro.piezas = datos[n-1].piezas;
 			registro.print_reg();		
-	
 		},10);
 	}
 
@@ -50,7 +48,6 @@ $( document ).ready(function() {
 	$("button#_i_addproduct").click(
 	function add_product(event){
 		event.preventDefault();
-
 		registro = new Registro($("#_s_producto").val(),
 				$("#_s_longitud").val(),
 				$("#_s_peso").val(),
@@ -59,22 +56,30 @@ $( document ).ready(function() {
 				$("#_i_qxbunch").val(),
 				$("#_i_eprecio").val(),
 				$('input[name=tipo_precio]:checked').val());
-
 		registro.paquete = Registro.paquete;
-		registro.tipo_caja = Registro.tipo_caja
+		registro.tipo_caja = Registro.tipo_caja;
 		registro.piezas = Registro.piezas;
-		registro.listar();
+		$(".fila_par").empty();
+		$(".fila_impar").empty();
+		registro.print_reg();
 		registro.persist_registro();
-
 	});
+
 
 	$("button#_i_addbox").click(
 	function add_box(event){
 		event.preventDefault();
 		Registro.prototype.set_caja();
 		$(".seccion_prods").show();	
-		
 	});
+
+
+	$("button#_i_adinformation").click(
+	function(event){
+		event.preventDefault();
+		localStorage.removeItem("datos");
+	});
+
 
 	$("body").on("click",".borrar_registro",
 	function (){
@@ -85,6 +90,7 @@ $( document ).ready(function() {
 		registro.print_reg();
 		registro.persist_registro();
 	});
+
 
 	$("body").on("click",".editable_reg",
 	function(event){
@@ -98,6 +104,7 @@ $( document ).ready(function() {
 		id_tr = $(this).attr("id");
 	});
 
+
 	$("body").on("click","#bt_ok",
 	function(event){
 		event.preventDefault();
@@ -108,6 +115,7 @@ $( document ).ready(function() {
 		registro.persist_registro();
 	});
 		
+
 	$("body").on("click","#bt_cancel",
 	function(event){
 		event.preventDefault();
@@ -116,12 +124,28 @@ $( document ).ready(function() {
 	});
 		
 
+	$("body").on("mouseenter",".editable_reg",
+	function(){
+			$(this).css({"text-decoration":"underline","font-size":"17px","border":"solid 1px #009000"});
+	});
+
+
+	$("body").on("mouseleave",".editable_reg",
+	function(){
+			$(this).css({"text-decoration":"none","font-size":"12px","border":"none"});
+	});
+
+
+	$("body").on("click","#borrar_caja", function(event){
+		event.preventDefault();
+		Registro.prototype.eliminar_caja();
+	});
+
 
 //---------------DEFINICION CLASE REGISTRO---------------------------------------------------------------------------------------
 
 	var Registro = function(prod,longitud,peso,corte,bunches,qxbunch,precio,tipo_precio){
 		Registro.fila ++;
-
 		this.prod = prod;
 		this.longitud = longitud;
 		this.peso = peso;
@@ -133,52 +157,25 @@ $( document ).ready(function() {
 		this.paquete = Registro.paquete;
 		this.tipo_caja = Registro.tipo_caja;
 		this.piezas = Registro.piezas;
-
 		Registro.items.push(this);
-		//console.log(JSON.stringify(Registro.items));
+	}
 
-	this.get_producto = function(){
+	Registro.prototype.get_producto = function(){
 		var fin = this.prod.length - 2;
 		var producto = this.prod.substring(0,fin);
 		return producto;
 	}
 
-	this.get_dim = function(){
+	Registro.prototype.get_dim = function(){
 		var pos = this.prod.length;
 		var dim = this.prod.substring(pos-1,pos);
 		return dim;
 	}
 
-	this.listar = function(){
-		var k = Registro.fila % 2;
-		$("<tr class=" + (k == 1 ? 'fila_par' : 'fila_impar').toString() + " id= f"+(Registro.fila).toString() +
-		"><td>"+ Registro.fila +
-		"</td><td>" + (Registro.box_marker == 1 ? this.paquete : ' ').toString() +
-		"</td><td>" + (Registro.box_marker == 1 ? this.tipo_caja : ' ').toString() +
-		"</td><td>" + (Registro.box_marker == 1 ? this.piezas : ' ').toString() +
-		"</td><td>" + this.get_producto() +
-		"</td><td>" + (this.get_dim() == 'w' ? this.peso : this.longitud).toString() +
-		"</td><td>" + this.corte.toString() +
-		"</td><td class = 'editable_reg' id ='bunches-" + Registro.fila +  "'>" + this.bunches.toString() +
-		"</td><td>" + this.qxbunch.toString() +
-		"</td><td>" + this.precio.toString() +
-		"</td><td>" + this.tipo_precio.toString() +
-		"</td><td> <button class = 'borrar_registro' id = ' bf-" + Registro.fila + "'>-</button>" + 
-		"</td></tr>").insertAfter("#f"+(Registro.fila-1).toString());
-
-		Registro.box_marker = 0;
-		Registro.lock_set_caja = 0;
-	
-	}
-
-	this.print_reg = function(){
-
+	Registro.prototype.print_reg = function(){
 		Registro.box_marker = 1;
-
+		$("#caja_vacia").remove();
 		for(n=0 ;n<Registro.items.length;n++){
-
-			console.log(   typeof Registro.items[n] )  ;
-
 			if(n == 0 || Registro.items[n].paquete != Registro.items[n-1].paquete){Registro.box_marker = 1;}
 			else {Registro.box_marker = 0;}
 			var k = (n+1) % 2;
@@ -191,31 +188,26 @@ $( document ).ready(function() {
 			"</td><td>" + (Registro.items[n].get_dim() == 'w' ? Registro.items[n].peso : Registro.items[n].longitud).toString() +
 			"</td><td>" + Registro.items[n].corte +
 			"</td><td class = 'editable_reg' id ='bunches-" + (n+1) +  "'>" + Registro.items[n].bunches +
-			"</td><td>" + Registro.items[n].qxbunch +
+			"</td><td class = 'editable_reg' id ='qxbunch-" + (n+1) +  "'>" + Registro.items[n].qxbunch +
 			"</td><td>" + Registro.items[n].precio +
 			"</td><td>" + Registro.items[n].tipo_precio +
 			"</td><td> <button class = 'borrar_registro' id = ' bf-" + (n+1) + "'>-</button>" + 
 			"</td></tr>").insertAfter("#f"+(n).toString());			
-		
 		}
-
+		Registro.box_marker = 0;
+		Registro.lock_set_caja = 0;
 	}	
 
 
-	this.eliminar_reg = function(posicion){
+	Registro.prototype.eliminar_reg = function(posicion){
+		Registro.paquete = Registro.items[posicion-2].paquete	
 		Registro.items.splice((posicion-1),1);
 		Registro.fila = Registro.items.length;
-		console.log(JSON.stringify(Registro.items));
-
+		
 	}
 
 
-	this.eliminar_caja = function(){
-
-
-	}
-
-	this.editar_reg = function(campo, valor){
+	Registro.prototype.editar_reg = function(campo, valor){
 		$("#"+campo).text(valor);
 		var a = campo.split("-");
 		var fila = Registro.items[(a[1]-1)];
@@ -223,17 +215,40 @@ $( document ).ready(function() {
 		
 	}
 
-	this.editar_caja = function(caja){
 
-
-	}
-
-	this.persist_registro = function(){
+	Registro.prototype.persist_registro = function(){
 		var datos = JSON.stringify(Registro.items);
 		var fecha = new Date();
 		localStorage.setItem("datos",datos);
 		localStorage.setItem("fecha",fecha);		
 	}
+
+	Registro.prototype.set_caja = function(){
+		if (Registro.lock_set_caja == 0)
+		{
+			if(Registro.paquete == 0) {Registro.paquete ++;}
+			else{Registro.paquete = Registro.items[Registro.fila - 1].paquete + 1 ;}
+			Registro.tipo_caja = $("#_s_empaque").val();
+			Registro.piezas = $("#_i_piezas").val();
+			Registro.box_marker = 1;
+			Registro.lock_set_caja = 1;
+			
+			$("<tr id = 'caja_vacia'><td colspan=11>Box: "+Registro.tipo_caja+"  |   Pieces: "+Registro.piezas+
+			"   . Now you can choose the products.</td><td id=borrar_caja><button>-</button></td></tr>").insertAfter("#f"+(Registro.fila).toString())			
+
+		}		
+	}
+
+
+	Registro.prototype.eliminar_caja = function(){
+		$("#caja_vacia").remove();
+		Registro.lock_set_caja = 0;
+		if(Registro.paquete == 1){Registro.paquete = 0;}
+		else {Registro.paquete --;} 
+
+	}
+
+	Registro.prototype.editar_caja = function(caja){
 
 	}
 
@@ -242,19 +257,6 @@ $( document ).ready(function() {
 	Registro.paquete = 0;
 	Registro.box_marker = 1;
 	Registro.lock_set_caja = 0;
-
-
-	Registro.prototype.set_caja = function(){
-		if (Registro.lock_set_caja == 0)
-		{
-			Registro.paquete ++;
-			Registro.tipo_caja = $("#_s_empaque").val();
-			Registro.piezas = $("#_i_piezas").val();
-			Registro.box_marker = 1;
-			Registro.lock_set_caja = 1;
-		}		
-	}
-
 
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------

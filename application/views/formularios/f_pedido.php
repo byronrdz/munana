@@ -93,7 +93,7 @@
 </td></tr>
 
 
-<tr class="seccion_prods" ><td colspan=2><input class="boton_largo" type="submit" value="Submit Aditional Info" width=100%></td></tr>
+<tr class="seccion_prods" ><td colspan=2><button id = "_i_adinformation" >Aditional Information</button></td></tr>
 
 </form>
 
