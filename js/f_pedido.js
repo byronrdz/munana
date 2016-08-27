@@ -126,13 +126,13 @@ $( document ).ready(function() {
 
 	$("body").on("mouseenter",".editable_reg",
 	function(){
-			$(this).css({"text-decoration":"underline","font-size":"17px","border":"solid 1px #009000"});
+			$(this).css({"text-decoration":"underline","font-size":"16px"});
 	});
 
 
 	$("body").on("mouseleave",".editable_reg",
 	function(){
-			$(this).css({"text-decoration":"none","font-size":"12px","border":"none"});
+			$(this).css({"text-decoration":"none","font-size":"12px"});
 	});
 
 
@@ -182,15 +182,15 @@ $( document ).ready(function() {
 			$("<tr class=" + (k == 1 ? 'fila_par' : 'fila_impar').toString() + " id= f"+(n+1).toString() +
 			"><td>"+ (n+1) +
 			"</td><td>" + (Registro.box_marker == 1 ? Registro.items[n].paquete : ' ') +
-			"</td><td>" + (Registro.box_marker == 1 ? Registro.items[n].tipo_caja : ' ') +
-			"</td><td>" + (Registro.box_marker == 1 ? Registro.items[n].piezas : ' ' ) +
+			"</td><td class='centrado'>" + (Registro.box_marker == 1 ? Registro.items[n].tipo_caja : ' ') +
+			"</td><td class='centrado'>" + (Registro.box_marker == 1 ? Registro.items[n].piezas : ' ' ) +
 			"</td><td>" + Registro.items[n].get_producto() + 
-			"</td><td>" + (Registro.items[n].get_dim() == 'w' ? Registro.items[n].peso : Registro.items[n].longitud).toString() +
-			"</td><td>" + Registro.items[n].corte +
-			"</td><td class = 'editable_reg' id ='bunches-" + (n+1) +  "'>" + Registro.items[n].bunches +
-			"</td><td class = 'editable_reg' id ='qxbunch-" + (n+1) +  "'>" + Registro.items[n].qxbunch +
-			"</td><td>" + Registro.items[n].precio +
-			"</td><td>" + Registro.items[n].tipo_precio +
+			"</td><td class='centrado'>" + (Registro.items[n].get_dim() == 'w' ? Registro.items[n].peso : Registro.items[n].longitud).toString() +
+			"</td><td class='centrado'>" + Registro.items[n].corte +
+			"</td><td class = 'editable_reg centrado' id ='bunches-" + (n+1) +  "'>" + Registro.items[n].bunches +
+			"</td><td class = 'editable_reg centrado' id ='qxbunch-" + (n+1) +  "'>" + Registro.items[n].qxbunch +
+			"</td><td class='editable_reg centrado' id='precio-" + (n+1) + "'>" + Registro.items[n].precio +
+			"</td><td class='centrado'>" + Registro.items[n].tipo_precio +
 			"</td><td> <button class = 'borrar_registro' id = ' bf-" + (n+1) + "'>-</button>" + 
 			"</td></tr>").insertAfter("#f"+(n).toString());			
 		}
@@ -233,8 +233,10 @@ $( document ).ready(function() {
 			Registro.box_marker = 1;
 			Registro.lock_set_caja = 1;
 			
-			$("<tr id = 'caja_vacia'><td colspan=11>Box: "+Registro.tipo_caja+"  |   Pieces: "+Registro.piezas+
-			"   . Now you can choose the products.</td><td id=borrar_caja><button>-</button></td></tr>").insertAfter("#f"+(Registro.fila).toString())			
+			$("<tr id = 'caja_vacia'><td colspan=11>Box: "+Registro.tipo_caja+
+			"  |   Pieces: "+Registro.piezas+
+			"   . Now you can choose the products.</td>"+
+			"<td id=borrar_caja><button>-</button></td></tr>").insertAfter("#f"+(Registro.fila).toString())			
 
 		}		
 	}

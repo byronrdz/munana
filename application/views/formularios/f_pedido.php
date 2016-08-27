@@ -1,4 +1,4 @@
-<script src="<?php echo base_url(); ?>js/f_pedido.js"></script>
+<script src="../../js/f_pedido.js"></script>
 <div id="seccionformulario" class="formulario">
 <div class="titulo_form">ORDERS</div><br>
 <table cellpadding=3 width="250" border=0>
@@ -102,7 +102,7 @@
 </div>
 
 <div id="seccionpedido">
-<table id="tablapedido" border=0 width=100%>
+<table id="tablapedido" width=900px>
 <tr id="f0">
 <th class= "ttp" width="25">Item</th><th class="ttp">Boxes</th><th class="ttp">Package</th><th class="ttp">Pieces</th><th class="ttp" width="280">Product</th><th class="ttp">long/wgt</th><th class="ttp">Cut Stage</th><th class="ttp">Bunches</th><th class="ttp">QxBunch</th><th class="ttp">E.Price</th><th class="ttp">B/S</th><th class="ttp"></th>
 </tr>
