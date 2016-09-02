@@ -1,4 +1,4 @@
-<script src="../../js/f_pedido.js"></script>
+<script src="../js/f_pedido.js"></script>
 <div id="seccionformulario" class="formulario">
 <div class="titulo_form">ORDERS</div><br>
 <table cellpadding=3 width="250" border=0>
