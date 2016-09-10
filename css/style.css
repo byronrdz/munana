@@ -148,4 +148,39 @@ div#seccionpedido{
 	padding:5px;
 }
 
+/* FORMULARIO DE LOGIN */
+.cform_login{
+	font-family: Arial, Tahoma, sans-serif;
+	font-size: 18px;
+	color: #707072;
+	text-align: left;
+}
+
+
+#form_login{
+	position: relative;
+	margin: auto;
+	width: 40%;
+	height: 40%;
+	top: 10%;
+}
+
+#aceptar_login{
+	display:inline;
+	width: 150px;
+	}
+	
+#borrar_login{
+	display:inline;
+	width: 150px;
+	}
+	
+#id_recordar_sesion{
+	display:inline;
+	}
+	
+.texto2{
+	font-size: 14px;
+}
+
 

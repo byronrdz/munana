@@ -31,9 +31,9 @@ class Pedidos extends CI_Controller {
 			$data['pesos'] = $this->munana_model->get_pesos();
 		}
 		
-        	$this->load->view('templates/header', $data);
+        	$this->load->view('templates/header');
 	        $this->load->view('formularios/'.$page, $data);
-	        $this->load->view('templates/footer', $data);
+	        $this->load->view('templates/footer');
         }
 }
 

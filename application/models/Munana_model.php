@@ -38,6 +38,30 @@ class Munana_model extends CI_Model {
 		$query = $this->db->get();
         	return $query->result_array();
 	}
+	
+	public function verificar_usuario($usuario)
+	{
+		$query = $this->db->get_where('t_usuarios', array( 'email' => $usuario ));
+		$result = $query -> result_array();
+		if (count($result) > 0 ){return TRUE;}
+		if (count($result) == 0 ){return FALSE;}		
+	}
+
+	public function verificar_credenciales($usuario,$clave)
+	{
+		$query = $this->db->get_where('t_usuarios', array( 'email' => $usuario, 'password' => $clave ));
+		$result = $query -> result_array();
+		if (count($result) > 0 ){return TRUE;}
+		if (count($result) == 0 ){return FALSE;}	
+	}
+	
+	public function cargar_registro_usuario($registro)
+	{
+	
+		
+	
+	}
+	
 
 
 }

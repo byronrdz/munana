@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.4.8
 -- Dumped by pg_dump version 9.4.8
--- Started on 2016-08-04 06:26:45 ECT
+-- Started on 2016-09-09 21:58:57 ECT
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -15,7 +15,7 @@ SET client_min_messages = warning;
 
 DROP DATABASE munana;
 --
--- TOC entry 2258 (class 1262 OID 16436)
+-- TOC entry 2269 (class 1262 OID 16436)
 -- Name: munana; Type: DATABASE; Schema: -; Owner: munanadata
 --
 
@@ -44,7 +44,7 @@ CREATE SCHEMA public;
 ALTER SCHEMA public OWNER TO postgres;
 
 --
--- TOC entry 2259 (class 0 OID 0)
+-- TOC entry 2270 (class 0 OID 0)
 -- Dependencies: 6
 -- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
 --
@@ -61,7 +61,7 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2261 (class 0 OID 0)
+-- TOC entry 2272 (class 0 OID 0)
 -- Dependencies: 1
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
@@ -112,7 +112,7 @@ CREATE SEQUENCE "Agencia_id_agencia_seq"
 ALTER TABLE "Agencia_id_agencia_seq" OWNER TO munanadata;
 
 --
--- TOC entry 2262 (class 0 OID 0)
+-- TOC entry 2273 (class 0 OID 0)
 -- Dependencies: 184
 -- Name: Agencia_id_agencia_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: munanadata
 --
@@ -142,7 +142,7 @@ CREATE TABLE t_cliente (
 ALTER TABLE t_cliente OWNER TO munanadata;
 
 --
--- TOC entry 2263 (class 0 OID 0)
+-- TOC entry 2274 (class 0 OID 0)
 -- Dependencies: 178
 -- Name: COLUMN t_cliente.id_cliente; Type: COMMENT; Schema: public; Owner: munanadata
 --
@@ -166,7 +166,7 @@ CREATE SEQUENCE "Cliente_id_cliente_seq"
 ALTER TABLE "Cliente_id_cliente_seq" OWNER TO munanadata;
 
 --
--- TOC entry 2264 (class 0 OID 0)
+-- TOC entry 2275 (class 0 OID 0)
 -- Dependencies: 177
 -- Name: Cliente_id_cliente_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: munanadata
 --
@@ -214,7 +214,7 @@ CREATE SEQUENCE "Detalle_id_detalle_seq"
 ALTER TABLE "Detalle_id_detalle_seq" OWNER TO munanadata;
 
 --
--- TOC entry 2265 (class 0 OID 0)
+-- TOC entry 2276 (class 0 OID 0)
 -- Dependencies: 175
 -- Name: Detalle_id_detalle_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: munanadata
 --
@@ -257,7 +257,7 @@ CREATE SEQUENCE "Factura_id_factura_seq"
 ALTER TABLE "Factura_id_factura_seq" OWNER TO munanadata;
 
 --
--- TOC entry 2266 (class 0 OID 0)
+-- TOC entry 2277 (class 0 OID 0)
 -- Dependencies: 173
 -- Name: Factura_id_factura_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: munanadata
 --
@@ -298,7 +298,7 @@ CREATE SEQUENCE "Pais_id_pais_seq"
 ALTER TABLE "Pais_id_pais_seq" OWNER TO munanadata;
 
 --
--- TOC entry 2267 (class 0 OID 0)
+-- TOC entry 2278 (class 0 OID 0)
 -- Dependencies: 187
 -- Name: Pais_id_pais_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: munanadata
 --
@@ -340,7 +340,7 @@ CREATE SEQUENCE "Producto_id_producto_seq"
 ALTER TABLE "Producto_id_producto_seq" OWNER TO munanadata;
 
 --
--- TOC entry 2268 (class 0 OID 0)
+-- TOC entry 2279 (class 0 OID 0)
 -- Dependencies: 180
 -- Name: Producto_id_producto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: munanadata
 --
@@ -386,7 +386,7 @@ CREATE SEQUENCE "Proveedor_id_proveedor_seq"
 ALTER TABLE "Proveedor_id_proveedor_seq" OWNER TO munanadata;
 
 --
--- TOC entry 2269 (class 0 OID 0)
+-- TOC entry 2280 (class 0 OID 0)
 -- Dependencies: 186
 -- Name: Proveedor_id_proveedor_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: munanadata
 --
@@ -429,13 +429,28 @@ CREATE SEQUENCE "Transporte_id_transporte_seq"
 ALTER TABLE "Transporte_id_transporte_seq" OWNER TO munanadata;
 
 --
--- TOC entry 2270 (class 0 OID 0)
+-- TOC entry 2281 (class 0 OID 0)
 -- Dependencies: 185
 -- Name: Transporte_id_transporte_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: munanadata
 --
 
 ALTER SEQUENCE "Transporte_id_transporte_seq" OWNED BY t_transporte.id_transporte;
 
+
+--
+-- TOC entry 204 (class 1259 OID 32828)
+-- Name: ci_sessions; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE ci_sessions (
+    id character varying(40) NOT NULL,
+    ip_address character varying(45) NOT NULL,
+    "timestamp" bigint DEFAULT 0 NOT NULL,
+    data text DEFAULT ''::text NOT NULL
+);
+
+
+ALTER TABLE ci_sessions OWNER TO postgres;
 
 --
 -- TOC entry 196 (class 1259 OID 24633)
@@ -445,7 +460,8 @@ ALTER SEQUENCE "Transporte_id_transporte_seq" OWNED BY t_transporte.id_transport
 CREATE TABLE t_empaque (
     id_empaque integer NOT NULL,
     nombre text,
-    bunchsref smallint
+    bunchsref smallint,
+    eqcajas real
 );
 
 
@@ -467,7 +483,7 @@ CREATE SEQUENCE t_empaque_id_empaque_seq
 ALTER TABLE t_empaque_id_empaque_seq OWNER TO munanadata;
 
 --
--- TOC entry 2271 (class 0 OID 0)
+-- TOC entry 2282 (class 0 OID 0)
 -- Dependencies: 195
 -- Name: t_empaque_id_empaque_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: munanadata
 --
@@ -504,7 +520,7 @@ CREATE SEQUENCE t_longitud_id_longitud_seq
 ALTER TABLE t_longitud_id_longitud_seq OWNER TO munanadata;
 
 --
--- TOC entry 2272 (class 0 OID 0)
+-- TOC entry 2283 (class 0 OID 0)
 -- Dependencies: 197
 -- Name: t_longitud_id_longitud_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: munanadata
 --
@@ -549,7 +565,7 @@ CREATE SEQUENCE t_pedido_id_pedido_seq
 ALTER TABLE t_pedido_id_pedido_seq OWNER TO postgres;
 
 --
--- TOC entry 2273 (class 0 OID 0)
+-- TOC entry 2284 (class 0 OID 0)
 -- Dependencies: 194
 -- Name: t_pedido_id_pedido_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -586,7 +602,7 @@ CREATE SEQUENCE t_peso_id_peso_seq
 ALTER TABLE t_peso_id_peso_seq OWNER TO munanadata;
 
 --
--- TOC entry 2274 (class 0 OID 0)
+-- TOC entry 2285 (class 0 OID 0)
 -- Dependencies: 199
 -- Name: t_peso_id_peso_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: munanadata
 --
@@ -648,7 +664,7 @@ CREATE SEQUENCE t_userproveedor_id_userproveedor_seq
 ALTER TABLE t_userproveedor_id_userproveedor_seq OWNER TO munanadata;
 
 --
--- TOC entry 2275 (class 0 OID 0)
+-- TOC entry 2286 (class 0 OID 0)
 -- Dependencies: 192
 -- Name: t_userproveedor_id_userproveedor_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: munanadata
 --
@@ -696,7 +712,7 @@ CREATE SEQUENCE t_usuarios_id_usuario_seq
 ALTER TABLE t_usuarios_id_usuario_seq OWNER TO munanadata;
 
 --
--- TOC entry 2276 (class 0 OID 0)
+-- TOC entry 2287 (class 0 OID 0)
 -- Dependencies: 202
 -- Name: t_usuarios_id_usuario_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: munanadata
 --
@@ -720,7 +736,7 @@ CREATE SEQUENCE usuario_id_usuario_seq
 ALTER TABLE usuario_id_usuario_seq OWNER TO munanadata;
 
 --
--- TOC entry 2277 (class 0 OID 0)
+-- TOC entry 2288 (class 0 OID 0)
 -- Dependencies: 189
 -- Name: usuario_id_usuario_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: munanadata
 --
@@ -742,7 +758,7 @@ CREATE VIEW v_producto AS
 ALTER TABLE v_producto OWNER TO munanadata;
 
 --
--- TOC entry 2065 (class 2604 OID 16545)
+-- TOC entry 2070 (class 2604 OID 16545)
 -- Name: id_agencia; Type: DEFAULT; Schema: public; Owner: munanadata
 --
 
@@ -750,7 +766,7 @@ ALTER TABLE ONLY t_agencia ALTER COLUMN id_agencia SET DEFAULT nextval('"Agencia
 
 
 --
--- TOC entry 2061 (class 2604 OID 16471)
+-- TOC entry 2066 (class 2604 OID 16471)
 -- Name: id_cliente; Type: DEFAULT; Schema: public; Owner: munanadata
 --
 
@@ -758,7 +774,7 @@ ALTER TABLE ONLY t_cliente ALTER COLUMN id_cliente SET DEFAULT nextval('"Cliente
 
 
 --
--- TOC entry 2060 (class 2604 OID 16457)
+-- TOC entry 2065 (class 2604 OID 16457)
 -- Name: id_detalle; Type: DEFAULT; Schema: public; Owner: munanadata
 --
 
@@ -766,7 +782,7 @@ ALTER TABLE ONLY t_detalle ALTER COLUMN id_detalle SET DEFAULT nextval('"Detalle
 
 
 --
--- TOC entry 2070 (class 2604 OID 24636)
+-- TOC entry 2075 (class 2604 OID 24636)
 -- Name: id_empaque; Type: DEFAULT; Schema: public; Owner: munanadata
 --
 
@@ -774,7 +790,7 @@ ALTER TABLE ONLY t_empaque ALTER COLUMN id_empaque SET DEFAULT nextval('t_empaqu
 
 
 --
--- TOC entry 2059 (class 2604 OID 16444)
+-- TOC entry 2064 (class 2604 OID 16444)
 -- Name: id_factura; Type: DEFAULT; Schema: public; Owner: munanadata
 --
 
@@ -782,7 +798,7 @@ ALTER TABLE ONLY t_factura ALTER COLUMN id_factura SET DEFAULT nextval('"Factura
 
 
 --
--- TOC entry 2071 (class 2604 OID 24647)
+-- TOC entry 2076 (class 2604 OID 24647)
 -- Name: id_longitud; Type: DEFAULT; Schema: public; Owner: munanadata
 --
 
@@ -790,7 +806,7 @@ ALTER TABLE ONLY t_longitud ALTER COLUMN id_longitud SET DEFAULT nextval('t_long
 
 
 --
--- TOC entry 2066 (class 2604 OID 16583)
+-- TOC entry 2071 (class 2604 OID 16583)
 -- Name: id_pais; Type: DEFAULT; Schema: public; Owner: munanadata
 --
 
@@ -798,7 +814,7 @@ ALTER TABLE ONLY t_pais ALTER COLUMN id_pais SET DEFAULT nextval('"Pais_id_pais_
 
 
 --
--- TOC entry 2069 (class 2604 OID 16712)
+-- TOC entry 2074 (class 2604 OID 16712)
 -- Name: id_pedido; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -806,7 +822,7 @@ ALTER TABLE ONLY t_pedido ALTER COLUMN id_pedido SET DEFAULT nextval('t_pedido_i
 
 
 --
--- TOC entry 2072 (class 2604 OID 24655)
+-- TOC entry 2077 (class 2604 OID 24655)
 -- Name: id_peso; Type: DEFAULT; Schema: public; Owner: munanadata
 --
 
@@ -814,7 +830,7 @@ ALTER TABLE ONLY t_peso ALTER COLUMN id_peso SET DEFAULT nextval('t_peso_id_peso
 
 
 --
--- TOC entry 2063 (class 2604 OID 16509)
+-- TOC entry 2068 (class 2604 OID 16509)
 -- Name: id_producto; Type: DEFAULT; Schema: public; Owner: munanadata
 --
 
@@ -822,7 +838,7 @@ ALTER TABLE ONLY t_producto ALTER COLUMN id_producto SET DEFAULT nextval('"Produ
 
 
 --
--- TOC entry 2062 (class 2604 OID 16564)
+-- TOC entry 2067 (class 2604 OID 16564)
 -- Name: id_proveedor; Type: DEFAULT; Schema: public; Owner: munanadata
 --
 
@@ -830,7 +846,7 @@ ALTER TABLE ONLY t_proveedor ALTER COLUMN id_proveedor SET DEFAULT nextval('"Pro
 
 
 --
--- TOC entry 2064 (class 2604 OID 16555)
+-- TOC entry 2069 (class 2604 OID 16555)
 -- Name: id_transporte; Type: DEFAULT; Schema: public; Owner: munanadata
 --
 
@@ -838,7 +854,7 @@ ALTER TABLE ONLY t_transporte ALTER COLUMN id_transporte SET DEFAULT nextval('"T
 
 
 --
--- TOC entry 2067 (class 2604 OID 16662)
+-- TOC entry 2072 (class 2604 OID 16662)
 -- Name: id_usercliente; Type: DEFAULT; Schema: public; Owner: munanadata
 --
 
@@ -846,7 +862,7 @@ ALTER TABLE ONLY t_usercliente ALTER COLUMN id_usercliente SET DEFAULT nextval('
 
 
 --
--- TOC entry 2068 (class 2604 OID 16693)
+-- TOC entry 2073 (class 2604 OID 16693)
 -- Name: id_userproveedor; Type: DEFAULT; Schema: public; Owner: munanadata
 --
 
@@ -854,7 +870,7 @@ ALTER TABLE ONLY t_userproveedor ALTER COLUMN id_userproveedor SET DEFAULT nextv
 
 
 --
--- TOC entry 2073 (class 2604 OID 32824)
+-- TOC entry 2078 (class 2604 OID 32824)
 -- Name: id_usuario; Type: DEFAULT; Schema: public; Owner: munanadata
 --
 
@@ -862,7 +878,7 @@ ALTER TABLE ONLY t_usuarios ALTER COLUMN id_usuario SET DEFAULT nextval('t_usuar
 
 
 --
--- TOC entry 2278 (class 0 OID 0)
+-- TOC entry 2289 (class 0 OID 0)
 -- Dependencies: 184
 -- Name: Agencia_id_agencia_seq; Type: SEQUENCE SET; Schema: public; Owner: munanadata
 --
@@ -871,7 +887,7 @@ SELECT pg_catalog.setval('"Agencia_id_agencia_seq"', 1, false);
 
 
 --
--- TOC entry 2279 (class 0 OID 0)
+-- TOC entry 2290 (class 0 OID 0)
 -- Dependencies: 177
 -- Name: Cliente_id_cliente_seq; Type: SEQUENCE SET; Schema: public; Owner: munanadata
 --
@@ -880,7 +896,7 @@ SELECT pg_catalog.setval('"Cliente_id_cliente_seq"', 1, false);
 
 
 --
--- TOC entry 2280 (class 0 OID 0)
+-- TOC entry 2291 (class 0 OID 0)
 -- Dependencies: 175
 -- Name: Detalle_id_detalle_seq; Type: SEQUENCE SET; Schema: public; Owner: munanadata
 --
@@ -889,7 +905,7 @@ SELECT pg_catalog.setval('"Detalle_id_detalle_seq"', 1, false);
 
 
 --
--- TOC entry 2281 (class 0 OID 0)
+-- TOC entry 2292 (class 0 OID 0)
 -- Dependencies: 173
 -- Name: Factura_id_factura_seq; Type: SEQUENCE SET; Schema: public; Owner: munanadata
 --
@@ -898,7 +914,7 @@ SELECT pg_catalog.setval('"Factura_id_factura_seq"', 1, false);
 
 
 --
--- TOC entry 2282 (class 0 OID 0)
+-- TOC entry 2293 (class 0 OID 0)
 -- Dependencies: 187
 -- Name: Pais_id_pais_seq; Type: SEQUENCE SET; Schema: public; Owner: munanadata
 --
@@ -907,7 +923,7 @@ SELECT pg_catalog.setval('"Pais_id_pais_seq"', 1, false);
 
 
 --
--- TOC entry 2283 (class 0 OID 0)
+-- TOC entry 2294 (class 0 OID 0)
 -- Dependencies: 180
 -- Name: Producto_id_producto_seq; Type: SEQUENCE SET; Schema: public; Owner: munanadata
 --
@@ -916,7 +932,7 @@ SELECT pg_catalog.setval('"Producto_id_producto_seq"', 6, true);
 
 
 --
--- TOC entry 2284 (class 0 OID 0)
+-- TOC entry 2295 (class 0 OID 0)
 -- Dependencies: 186
 -- Name: Proveedor_id_proveedor_seq; Type: SEQUENCE SET; Schema: public; Owner: munanadata
 --
@@ -925,7 +941,7 @@ SELECT pg_catalog.setval('"Proveedor_id_proveedor_seq"', 1, false);
 
 
 --
--- TOC entry 2285 (class 0 OID 0)
+-- TOC entry 2296 (class 0 OID 0)
 -- Dependencies: 185
 -- Name: Transporte_id_transporte_seq; Type: SEQUENCE SET; Schema: public; Owner: munanadata
 --
@@ -934,7 +950,35 @@ SELECT pg_catalog.setval('"Transporte_id_transporte_seq"', 1, false);
 
 
 --
--- TOC entry 2234 (class 0 OID 16537)
+-- TOC entry 2264 (class 0 OID 32828)
+-- Dependencies: 204
+-- Data for Name: ci_sessions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY ci_sessions (id, ip_address, "timestamp", data) FROM stdin;
+8f7308216db7a9d0efeabb1b18a4a99ed09e1c9b	127.0.0.1	1473468928	X19jaV9sYXN0X3JlZ2VuZXJhdGV8aToxNDczNDY4OTI4Ow==
+dfcb5bd79137485c85fabc28cba351a498426e11	127.0.0.1	1473399820	X19jaV9sYXN0X3JlZ2VuZXJhdGV8aToxNDczMzk5ODIwO25hbWV8czoxNToiQnlyb24gUm9kcmlndWV6IjtlbWFpbHxzOjE4OiJieXJvbnJkekBnbWFpbC5jb20iO2ZlY2hhfHM6MTk6IjIwMTYtMDktMDkgMDA6MzY6MzIiOw==
+2fcce7c3af883f3562915d233c435f8a8ce8c55f	127.0.0.1	1473403209	X19jaV9sYXN0X3JlZ2VuZXJhdGV8aToxNDczNDAzMjA5O25hbWV8czoxNToiQnlyb24gUm9kcmlndWV6IjtlbWFpbHxzOjE4OiJieXJvbnJkekBnbWFpbC5jb20iO2ZlY2hhfHM6MTk6IjIwMTYtMDktMDkgMDA6MzY6MzIiOw==
+fd107737a0b4fbe12b552566a42e7eb59ddc72d2	127.0.0.1	1473403545	X19jaV9sYXN0X3JlZ2VuZXJhdGV8aToxNDczNDAzNTQ1O25hbWV8czoxNToiQnlyb24gUm9kcmlndWV6IjtlbWFpbHxzOjE4OiJieXJvbnJkekBnbWFpbC5jb20iO2ZlY2hhfHM6MTk6IjIwMTYtMDktMDkgMDA6MzY6MzIiOw==
+8c34b039c82ffa923e20f2b5223bdccc6c88ce0b	127.0.0.1	1473404078	X19jaV9sYXN0X3JlZ2VuZXJhdGV8aToxNDczNDA0MDc4O25hbWV8czoxNToiQnlyb24gUm9kcmlndWV6IjtlbWFpbHxzOjE4OiJieXJvbnJkekBnbWFpbC5jb20iO2ZlY2hhfHM6MTk6IjIwMTYtMDktMDkgMDA6MzY6MzIiOw==
+340ca6bff66a1d80fca1fa44749726c16406d27e	127.0.0.1	1473469240	X19jaV9sYXN0X3JlZ2VuZXJhdGV8aToxNDczNDY5MjQwOw==
+8719432b0c3c2f87f3c389b8309ea8ad8c340e8a	127.0.0.1	1473404392	X19jaV9sYXN0X3JlZ2VuZXJhdGV8aToxNDczNDA0MzkyO25hbWV8czoxNToiQnlyb24gUm9kcmlndWV6IjtlbWFpbHxzOjE4OiJieXJvbnJkekBnbWFpbC5jb20iO2ZlY2hhfHM6MTk6IjIwMTYtMDktMDkgMDA6MzY6MzIiOw==
+082c19d59a4b2a2af8b6d1d3a817269b9baf7556	127.0.0.1	1473469378	X19jaV9sYXN0X3JlZ2VuZXJhdGV8aToxNDczNDY5MzA5Ow==
+496ea50ac0324a6247aa68225819b5a4ddd388af	127.0.0.1	1473404765	X19jaV9sYXN0X3JlZ2VuZXJhdGV8aToxNDczNDA0NzY1O25hbWV8czoxNToiQnlyb24gUm9kcmlndWV6IjtlbWFpbHxzOjE4OiJieXJvbnJkekBnbWFpbC5jb20iO2ZlY2hhfHM6MTk6IjIwMTYtMDktMDkgMDA6MzY6MzIiOw==
+037ef6421595588ecf66ad551303696ba4c38bd1	127.0.0.1	1473469541	X19jaV9sYXN0X3JlZ2VuZXJhdGV8aToxNDczNDY5NTQxOw==
+513d2e83d9857d0ab132d97ce3455959888db48e	127.0.0.1	1473405007	X19jaV9sYXN0X3JlZ2VuZXJhdGV8aToxNDczNDA1MDA3Ow==
+956530a1d5bbc44c140b58306b4fed66cbca1175	127.0.0.1	1473405110	X19jaV9sYXN0X3JlZ2VuZXJhdGV8aToxNDczNDA1MTEwO25hbWV8czoxNToiQnlyb24gUm9kcmlndWV6IjtlbWFpbHxzOjE4OiJieXJvbnJkekBnbWFpbC5jb20iO2ZlY2hhfHM6MTk6IjIwMTYtMDktMDkgMDA6MzY6MzIiOw==
+f86f54e32f9008a50c82a5b93e3012b84e61092e	127.0.0.1	1473470669	X19jaV9sYXN0X3JlZ2VuZXJhdGV8aToxNDczNDcwNjY5Ow==
+2b9e22af09b1a6bb3c2a79b09caebbffca600b7f	127.0.0.1	1473470733	X19jaV9sYXN0X3JlZ2VuZXJhdGV8aToxNDczNDcwNzMzOw==
+a9e59f1df2860ec25544c2cf9d0c142598179e49	127.0.0.1	1473405468	X19jaV9sYXN0X3JlZ2VuZXJhdGV8aToxNDczNDA1NDY4O25hbWV8czoxNToiQnlyb24gUm9kcmlndWV6IjtlbWFpbHxzOjE4OiJieXJvbnJkekBnbWFpbC5jb20iO2ZlY2hhfHM6MTk6IjIwMTYtMDktMDkgMDA6MzY6MzIiOw==
+b8785bcb0944f57bee0c940d38fed17ea0e5c6fb	127.0.0.1	1473405493	X19jaV9sYXN0X3JlZ2VuZXJhdGV8aToxNDczNDA1NDY4O25hbWV8czoxNToiQnlyb24gUm9kcmlndWV6IjtlbWFpbHxzOjE4OiJieXJvbnJkekBnbWFpbC5jb20iO2ZlY2hhfHM6MTk6IjIwMTYtMDktMDkgMDA6MzY6MzIiOw==
+360dabf58ff1a22f3035001e94d35fb68ee33182	127.0.0.1	1473471300	X19jaV9sYXN0X3JlZ2VuZXJhdGV8aToxNDczNDcxMzAwOw==
+f96d6912db3b0a5ea499feef7ec86b48d2187d1e	127.0.0.1	1473471304	X19jaV9sYXN0X3JlZ2VuZXJhdGV8aToxNDczNDcxMzAwOw==
+\.
+
+
+--
+-- TOC entry 2244 (class 0 OID 16537)
 -- Dependencies: 183
 -- Data for Name: t_agencia; Type: TABLE DATA; Schema: public; Owner: munanadata
 --
@@ -944,7 +988,7 @@ COPY t_agencia (nombre, tipo, id_pais, ciudad, direccion, telefono, fax, email, 
 
 
 --
--- TOC entry 2229 (class 0 OID 16468)
+-- TOC entry 2239 (class 0 OID 16468)
 -- Dependencies: 178
 -- Data for Name: t_cliente; Type: TABLE DATA; Schema: public; Owner: munanadata
 --
@@ -954,7 +998,7 @@ COPY t_cliente (id_cliente, nombre, id_pais, ciudad, direccion, telefono, fax, e
 
 
 --
--- TOC entry 2227 (class 0 OID 16454)
+-- TOC entry 2237 (class 0 OID 16454)
 -- Dependencies: 176
 -- Data for Name: t_detalle; Type: TABLE DATA; Schema: public; Owner: munanadata
 --
@@ -964,21 +1008,21 @@ COPY t_detalle (id_detalle, id_factura, id_producto, piezas, unidadxbunch, unida
 
 
 --
--- TOC entry 2247 (class 0 OID 24633)
+-- TOC entry 2257 (class 0 OID 24633)
 -- Dependencies: 196
 -- Data for Name: t_empaque; Type: TABLE DATA; Schema: public; Owner: munanadata
 --
 
-COPY t_empaque (id_empaque, nombre, bunchsref) FROM stdin;
-1	Half	10
-2	Quarter	5
-3	Octave	3
-4	Full	20
+COPY t_empaque (id_empaque, nombre, bunchsref, eqcajas) FROM stdin;
+1	Half	10	0.5
+2	Quarter	5	0.25
+3	Octave	3	0.125
+4	Full	20	1
 \.
 
 
 --
--- TOC entry 2286 (class 0 OID 0)
+-- TOC entry 2297 (class 0 OID 0)
 -- Dependencies: 195
 -- Name: t_empaque_id_empaque_seq; Type: SEQUENCE SET; Schema: public; Owner: munanadata
 --
@@ -987,7 +1031,7 @@ SELECT pg_catalog.setval('t_empaque_id_empaque_seq', 4, true);
 
 
 --
--- TOC entry 2225 (class 0 OID 16441)
+-- TOC entry 2235 (class 0 OID 16441)
 -- Dependencies: 174
 -- Data for Name: t_factura; Type: TABLE DATA; Schema: public; Owner: munanadata
 --
@@ -997,7 +1041,7 @@ COPY t_factura (id_factura, numero, fecha, fechapago, id_transporte, id_agencia,
 
 
 --
--- TOC entry 2249 (class 0 OID 24644)
+-- TOC entry 2259 (class 0 OID 24644)
 -- Dependencies: 198
 -- Data for Name: t_longitud; Type: TABLE DATA; Schema: public; Owner: munanadata
 --
@@ -1017,7 +1061,7 @@ COPY t_longitud (id_longitud, valor) FROM stdin;
 
 
 --
--- TOC entry 2287 (class 0 OID 0)
+-- TOC entry 2298 (class 0 OID 0)
 -- Dependencies: 197
 -- Name: t_longitud_id_longitud_seq; Type: SEQUENCE SET; Schema: public; Owner: munanadata
 --
@@ -1026,7 +1070,7 @@ SELECT pg_catalog.setval('t_longitud_id_longitud_seq', 9, true);
 
 
 --
--- TOC entry 2239 (class 0 OID 16580)
+-- TOC entry 2249 (class 0 OID 16580)
 -- Dependencies: 188
 -- Data for Name: t_pais; Type: TABLE DATA; Schema: public; Owner: munanadata
 --
@@ -1036,7 +1080,7 @@ COPY t_pais (id_pais, nombre, isocod2, isocod3, codtel, continente) FROM stdin;
 
 
 --
--- TOC entry 2244 (class 0 OID 16702)
+-- TOC entry 2254 (class 0 OID 16702)
 -- Dependencies: 193
 -- Data for Name: t_pedido; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1046,7 +1090,7 @@ COPY t_pedido (id_producto, piezas, unidadxbunch, unidadxcaja, longpeso, empaque
 
 
 --
--- TOC entry 2288 (class 0 OID 0)
+-- TOC entry 2299 (class 0 OID 0)
 -- Dependencies: 194
 -- Name: t_pedido_id_pedido_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1055,7 +1099,7 @@ SELECT pg_catalog.setval('t_pedido_id_pedido_seq', 1, false);
 
 
 --
--- TOC entry 2251 (class 0 OID 24652)
+-- TOC entry 2261 (class 0 OID 24652)
 -- Dependencies: 200
 -- Data for Name: t_peso; Type: TABLE DATA; Schema: public; Owner: munanadata
 --
@@ -1075,7 +1119,7 @@ COPY t_peso (id_peso, valor) FROM stdin;
 
 
 --
--- TOC entry 2289 (class 0 OID 0)
+-- TOC entry 2300 (class 0 OID 0)
 -- Dependencies: 199
 -- Name: t_peso_id_peso_seq; Type: SEQUENCE SET; Schema: public; Owner: munanadata
 --
@@ -1084,7 +1128,7 @@ SELECT pg_catalog.setval('t_peso_id_peso_seq', 10, true);
 
 
 --
--- TOC entry 2232 (class 0 OID 16506)
+-- TOC entry 2242 (class 0 OID 16506)
 -- Dependencies: 181
 -- Data for Name: t_producto; Type: TABLE DATA; Schema: public; Owner: munanadata
 --
@@ -1100,7 +1144,7 @@ COPY t_producto (id_producto, variedad, color, unidad, tipo_flor, dimension, pco
 
 
 --
--- TOC entry 2230 (class 0 OID 16497)
+-- TOC entry 2240 (class 0 OID 16497)
 -- Dependencies: 179
 -- Data for Name: t_proveedor; Type: TABLE DATA; Schema: public; Owner: munanadata
 --
@@ -1110,7 +1154,7 @@ COPY t_proveedor (nombre, id_pais, ciudad, direccion, telefono, fax, email, cpos
 
 
 --
--- TOC entry 2233 (class 0 OID 16518)
+-- TOC entry 2243 (class 0 OID 16518)
 -- Dependencies: 182
 -- Data for Name: t_transporte; Type: TABLE DATA; Schema: public; Owner: munanadata
 --
@@ -1120,7 +1164,7 @@ COPY t_transporte (tipo, nombre, direccion, telefono, fax, email, codigo, id_tra
 
 
 --
--- TOC entry 2241 (class 0 OID 16659)
+-- TOC entry 2251 (class 0 OID 16659)
 -- Dependencies: 190
 -- Data for Name: t_usercliente; Type: TABLE DATA; Schema: public; Owner: munanadata
 --
@@ -1130,7 +1174,7 @@ COPY t_usercliente (id_usercliente, nombre, nusuario, clave, tipo, id_cliente, e
 
 
 --
--- TOC entry 2242 (class 0 OID 16676)
+-- TOC entry 2252 (class 0 OID 16676)
 -- Dependencies: 191
 -- Data for Name: t_userproveedor; Type: TABLE DATA; Schema: public; Owner: munanadata
 --
@@ -1140,7 +1184,7 @@ COPY t_userproveedor (nombre, nusuario, clave, tipo, id_proveedor, email, telefo
 
 
 --
--- TOC entry 2290 (class 0 OID 0)
+-- TOC entry 2301 (class 0 OID 0)
 -- Dependencies: 192
 -- Name: t_userproveedor_id_userproveedor_seq; Type: SEQUENCE SET; Schema: public; Owner: munanadata
 --
@@ -1149,7 +1193,7 @@ SELECT pg_catalog.setval('t_userproveedor_id_userproveedor_seq', 1, false);
 
 
 --
--- TOC entry 2253 (class 0 OID 32821)
+-- TOC entry 2263 (class 0 OID 32821)
 -- Dependencies: 203
 -- Data for Name: t_usuarios; Type: TABLE DATA; Schema: public; Owner: munanadata
 --
@@ -1159,7 +1203,7 @@ COPY t_usuarios (id_usuario, nombre, email, password, id_pais, ciudad, telefono,
 
 
 --
--- TOC entry 2291 (class 0 OID 0)
+-- TOC entry 2302 (class 0 OID 0)
 -- Dependencies: 202
 -- Name: t_usuarios_id_usuario_seq; Type: SEQUENCE SET; Schema: public; Owner: munanadata
 --
@@ -1168,7 +1212,7 @@ SELECT pg_catalog.setval('t_usuarios_id_usuario_seq', 1, false);
 
 
 --
--- TOC entry 2292 (class 0 OID 0)
+-- TOC entry 2303 (class 0 OID 0)
 -- Dependencies: 189
 -- Name: usuario_id_usuario_seq; Type: SEQUENCE SET; Schema: public; Owner: munanadata
 --
@@ -1177,7 +1221,16 @@ SELECT pg_catalog.setval('usuario_id_usuario_seq', 1, false);
 
 
 --
--- TOC entry 2088 (class 2606 OID 16594)
+-- TOC entry 2111 (class 2606 OID 32838)
+-- Name: ci_sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY ci_sessions
+    ADD CONSTRAINT ci_sessions_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2095 (class 2606 OID 16594)
 -- Name: primaria_agencia; Type: CONSTRAINT; Schema: public; Owner: munanadata; Tablespace: 
 --
 
@@ -1186,7 +1239,7 @@ ALTER TABLE ONLY t_agencia
 
 
 --
--- TOC entry 2080 (class 2606 OID 16592)
+-- TOC entry 2087 (class 2606 OID 16592)
 -- Name: primaria_cliente; Type: CONSTRAINT; Schema: public; Owner: munanadata; Tablespace: 
 --
 
@@ -1195,7 +1248,7 @@ ALTER TABLE ONLY t_cliente
 
 
 --
--- TOC entry 2078 (class 2606 OID 16590)
+-- TOC entry 2085 (class 2606 OID 16590)
 -- Name: primaria_detalle; Type: CONSTRAINT; Schema: public; Owner: munanadata; Tablespace: 
 --
 
@@ -1204,7 +1257,7 @@ ALTER TABLE ONLY t_detalle
 
 
 --
--- TOC entry 2098 (class 2606 OID 24641)
+-- TOC entry 2105 (class 2606 OID 24641)
 -- Name: primaria_empaque; Type: CONSTRAINT; Schema: public; Owner: munanadata; Tablespace: 
 --
 
@@ -1213,7 +1266,7 @@ ALTER TABLE ONLY t_empaque
 
 
 --
--- TOC entry 2076 (class 2606 OID 16450)
+-- TOC entry 2083 (class 2606 OID 16450)
 -- Name: primaria_factura; Type: CONSTRAINT; Schema: public; Owner: munanadata; Tablespace: 
 --
 
@@ -1222,7 +1275,7 @@ ALTER TABLE ONLY t_factura
 
 
 --
--- TOC entry 2100 (class 2606 OID 24649)
+-- TOC entry 2107 (class 2606 OID 24649)
 -- Name: primaria_lonigutd; Type: CONSTRAINT; Schema: public; Owner: munanadata; Tablespace: 
 --
 
@@ -1231,7 +1284,7 @@ ALTER TABLE ONLY t_longitud
 
 
 --
--- TOC entry 2090 (class 2606 OID 16640)
+-- TOC entry 2097 (class 2606 OID 16640)
 -- Name: primaria_pais; Type: CONSTRAINT; Schema: public; Owner: munanadata; Tablespace: 
 --
 
@@ -1240,7 +1293,7 @@ ALTER TABLE ONLY t_pais
 
 
 --
--- TOC entry 2096 (class 2606 OID 16720)
+-- TOC entry 2103 (class 2606 OID 16720)
 -- Name: primaria_pedido; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1249,7 +1302,7 @@ ALTER TABLE ONLY t_pedido
 
 
 --
--- TOC entry 2102 (class 2606 OID 24657)
+-- TOC entry 2109 (class 2606 OID 24657)
 -- Name: primaria_peso; Type: CONSTRAINT; Schema: public; Owner: munanadata; Tablespace: 
 --
 
@@ -1258,7 +1311,7 @@ ALTER TABLE ONLY t_peso
 
 
 --
--- TOC entry 2084 (class 2606 OID 16588)
+-- TOC entry 2091 (class 2606 OID 16588)
 -- Name: primaria_producto; Type: CONSTRAINT; Schema: public; Owner: munanadata; Tablespace: 
 --
 
@@ -1267,7 +1320,7 @@ ALTER TABLE ONLY t_producto
 
 
 --
--- TOC entry 2082 (class 2606 OID 16633)
+-- TOC entry 2089 (class 2606 OID 16633)
 -- Name: primaria_proveedor; Type: CONSTRAINT; Schema: public; Owner: munanadata; Tablespace: 
 --
 
@@ -1276,7 +1329,7 @@ ALTER TABLE ONLY t_proveedor
 
 
 --
--- TOC entry 2086 (class 2606 OID 16606)
+-- TOC entry 2093 (class 2606 OID 16606)
 -- Name: primaria_transporte; Type: CONSTRAINT; Schema: public; Owner: munanadata; Tablespace: 
 --
 
@@ -1285,7 +1338,7 @@ ALTER TABLE ONLY t_transporte
 
 
 --
--- TOC entry 2092 (class 2606 OID 16667)
+-- TOC entry 2099 (class 2606 OID 16667)
 -- Name: primaria_usercliente; Type: CONSTRAINT; Schema: public; Owner: munanadata; Tablespace: 
 --
 
@@ -1294,7 +1347,7 @@ ALTER TABLE ONLY t_usercliente
 
 
 --
--- TOC entry 2094 (class 2606 OID 16701)
+-- TOC entry 2101 (class 2606 OID 16701)
 -- Name: primaria_userproveedor; Type: CONSTRAINT; Schema: public; Owner: munanadata; Tablespace: 
 --
 
@@ -1303,7 +1356,15 @@ ALTER TABLE ONLY t_userproveedor
 
 
 --
--- TOC entry 2074 (class 1259 OID 16451)
+-- TOC entry 2112 (class 1259 OID 32836)
+-- Name: ci_sessions_timestamp; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX ci_sessions_timestamp ON ci_sessions USING btree ("timestamp");
+
+
+--
+-- TOC entry 2081 (class 1259 OID 16451)
 -- Name: i_primaria_facturas; Type: INDEX; Schema: public; Owner: munanadata; Tablespace: 
 --
 
@@ -1311,7 +1372,7 @@ CREATE INDEX i_primaria_facturas ON t_factura USING btree (id_factura);
 
 
 --
--- TOC entry 2104 (class 2606 OID 16600)
+-- TOC entry 2114 (class 2606 OID 16600)
 -- Name: foreign_agencia; Type: FK CONSTRAINT; Schema: public; Owner: munanadata
 --
 
@@ -1320,7 +1381,7 @@ ALTER TABLE ONLY t_factura
 
 
 --
--- TOC entry 2103 (class 2606 OID 16595)
+-- TOC entry 2113 (class 2606 OID 16595)
 -- Name: foreign_cliente; Type: FK CONSTRAINT; Schema: public; Owner: munanadata
 --
 
@@ -1329,7 +1390,7 @@ ALTER TABLE ONLY t_factura
 
 
 --
--- TOC entry 2106 (class 2606 OID 16612)
+-- TOC entry 2116 (class 2606 OID 16612)
 -- Name: foreign_factura; Type: FK CONSTRAINT; Schema: public; Owner: munanadata
 --
 
@@ -1338,7 +1399,7 @@ ALTER TABLE ONLY t_detalle
 
 
 --
--- TOC entry 2111 (class 2606 OID 16641)
+-- TOC entry 2121 (class 2606 OID 16641)
 -- Name: foreign_pais; Type: FK CONSTRAINT; Schema: public; Owner: munanadata
 --
 
@@ -1347,7 +1408,7 @@ ALTER TABLE ONLY t_agencia
 
 
 --
--- TOC entry 2110 (class 2606 OID 16646)
+-- TOC entry 2120 (class 2606 OID 16646)
 -- Name: foreign_pais; Type: FK CONSTRAINT; Schema: public; Owner: munanadata
 --
 
@@ -1356,7 +1417,7 @@ ALTER TABLE ONLY t_proveedor
 
 
 --
--- TOC entry 2109 (class 2606 OID 16651)
+-- TOC entry 2119 (class 2606 OID 16651)
 -- Name: foreign_pais; Type: FK CONSTRAINT; Schema: public; Owner: munanadata
 --
 
@@ -1365,7 +1426,7 @@ ALTER TABLE ONLY t_cliente
 
 
 --
--- TOC entry 2107 (class 2606 OID 16627)
+-- TOC entry 2117 (class 2606 OID 16627)
 -- Name: foreign_producto; Type: FK CONSTRAINT; Schema: public; Owner: munanadata
 --
 
@@ -1374,7 +1435,7 @@ ALTER TABLE ONLY t_detalle
 
 
 --
--- TOC entry 2108 (class 2606 OID 16634)
+-- TOC entry 2118 (class 2606 OID 16634)
 -- Name: foreign_proveedor; Type: FK CONSTRAINT; Schema: public; Owner: munanadata
 --
 
@@ -1383,7 +1444,7 @@ ALTER TABLE ONLY t_detalle
 
 
 --
--- TOC entry 2105 (class 2606 OID 16607)
+-- TOC entry 2115 (class 2606 OID 16607)
 -- Name: foreign_transporte; Type: FK CONSTRAINT; Schema: public; Owner: munanadata
 --
 
@@ -1392,7 +1453,7 @@ ALTER TABLE ONLY t_factura
 
 
 --
--- TOC entry 2112 (class 2606 OID 16668)
+-- TOC entry 2122 (class 2606 OID 16668)
 -- Name: secundaria_cliente; Type: FK CONSTRAINT; Schema: public; Owner: munanadata
 --
 
@@ -1401,7 +1462,7 @@ ALTER TABLE ONLY t_usercliente
 
 
 --
--- TOC entry 2113 (class 2606 OID 16684)
+-- TOC entry 2123 (class 2606 OID 16684)
 -- Name: secundaria_cliente; Type: FK CONSTRAINT; Schema: public; Owner: munanadata
 --
 
@@ -1410,7 +1471,7 @@ ALTER TABLE ONLY t_userproveedor
 
 
 --
--- TOC entry 2260 (class 0 OID 0)
+-- TOC entry 2271 (class 0 OID 0)
 -- Dependencies: 6
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
@@ -1421,7 +1482,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2016-08-04 06:26:46 ECT
+-- Completed on 2016-09-09 21:58:58 ECT
 
 --
 -- PostgreSQL database dump complete
